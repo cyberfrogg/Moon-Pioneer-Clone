@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControls : MonoBehaviour
+namespace Player
 {
-    // Start is called before the first frame update
-    void Start()
+    public class PlayerControls : MonoBehaviour
     {
-        
-    }
+        public float Horizontal { get => _joystick.Horizontal; }
+        public float Vertical { get => _joystick.Vertical; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        [SerializeField] private Joystick _joystick;
     }
 }

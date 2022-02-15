@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+namespace Player
 {
-    // Start is called before the first frame update
-    void Start()
+    [RequireComponent(typeof(PlayerMovement))]
+    public class Player : MonoBehaviour
     {
-        
-    }
+        public PlayerMovement Movement { get => _movement; }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private PlayerMovement _movement;
+
+        private void Awake()
+        {
+            _movement = GetComponent<PlayerMovement>();
+        }
     }
 }
