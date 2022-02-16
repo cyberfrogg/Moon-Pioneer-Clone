@@ -32,7 +32,7 @@ namespace Player
                 applySensitivity(_controls.Horizontal),
                 0,
                 applySensitivity(_controls.Vertical)
-            );
+                );
             _move = _inputMove * Time.deltaTime * _settings.Speed;
 
             transform.Translate(_move);
@@ -44,7 +44,11 @@ namespace Player
             if (rotationLookAtVector == Vector3.zero)
                 return;
 
-            _modelContainer.rotation = Quaternion.LookRotation(rotationLookAtVector);
+            _modelContainer.rotation = Quaternion.Lerp(
+                _modelContainer.rotation,
+                Quaternion.LookRotation(rotationLookAtVector),
+                _settings.ModelRotationLerp * Time.deltaTime
+                );
         }
         private float applySensitivity(float value)
         {

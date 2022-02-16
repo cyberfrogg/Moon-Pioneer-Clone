@@ -217,6 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _settings:
     _speed: 5
+    _modelRotationLerp: 13
     _speedSensitivityCurve:
       serializedVersion: 2
       m_Curve:
