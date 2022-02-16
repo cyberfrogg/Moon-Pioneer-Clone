@@ -22,7 +22,7 @@ namespace Buildings
 
         private void Start()
         {
-            runPruductionWork();
+            Task task = runPruductionWork();
         }
         private void OnDestroy()
         {

@@ -14,15 +14,15 @@ namespace Items
         [SerializeField] private ItemType _itemType;
         [SerializeField] private float _itemPositionLerp = 10f;
 
-        private ItemsContainer _currentContainer;
+        private ContainerSlot _currentSlot;
         private Action<bool> _onMovementToStorageDone;
 
-        public void GoToStoragePad(ItemsContainer container, Action<bool> onMovementDone)
+        public void GoToSlot(ItemsContainer container, Action<bool> onMovementDone)
         {
             _onMovementToStorageDone?.Invoke(false);
             _onMovementToStorageDone = null;
 
-            _currentContainer = container;
+            _currentSlot = container.AttachItemToSlot(this);
             _onMovementToStorageDone += onMovementDone;
         }
         public void Disappear()
@@ -30,23 +30,34 @@ namespace Items
             Debug.Log("TODO: Object need to be properly destroyed on scene and in Lists");
         }
 
+        public void OnSlotAttach()
+        {
+
+        }
+        public void OnSlotDetach()
+        {
+            _onMovementToStorageDone?.Invoke(false);
+            _onMovementToStorageDone = null;
+            _currentSlot = null;
+        }
+
         private void Update()
         {
-            if (_currentContainer == null)
+            if (_currentSlot == null)
             {
                 return;
             }
 
             transform.position = Vector3.Lerp(
                 transform.position,
-                _currentContainer.transform.position,
+                _currentSlot.transform.position,
                 _itemPositionLerp * Time.deltaTime
                 );
 
-            float distanceToTarget = Vector3.Distance(transform.position, _currentContainer.transform.position);
+            float distanceToTarget = Vector3.Distance(transform.position, _currentSlot.transform.position);
             if (distanceToTarget <= 0.1f)
             {
-                _currentContainer = null;
+                _currentSlot = null;
                 _onMovementToStorageDone?.Invoke(true);
             }
         }
