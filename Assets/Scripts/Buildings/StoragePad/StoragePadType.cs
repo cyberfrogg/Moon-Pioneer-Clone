@@ -1,4 +1,4 @@
-﻿namespace Buildings
+﻿namespace Buildings.Storage
 {
     public enum StorageBuildingType
     {
