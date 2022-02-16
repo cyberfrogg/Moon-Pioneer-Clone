@@ -4,6 +4,7 @@ using Zenject;
 
 namespace Player
 {
+    [RequireComponent(typeof(Rigidbody))]
     public class PlayerMovement : MonoBehaviour
     {
         public bool IsMoving
@@ -18,8 +19,14 @@ namespace Player
         [SerializeField] private Transform _modelContainer;
 
         [Inject] private PlayerControls _controls;
+        private Rigidbody _rigidbody;
         private Vector3 _inputMove;
         private Vector3 _move;
+
+        private void Awake()
+        {
+            _rigidbody = GetComponent<Rigidbody>();
+        }
 
         private void Update()
         {
@@ -33,9 +40,10 @@ namespace Player
                 0,
                 applySensitivity(_controls.Vertical)
                 );
-            _move = _inputMove * Time.deltaTime * _settings.Speed;
 
-            transform.Translate(_move);
+            _move = transform.right * _inputMove.x + transform.forward * _inputMove.z;
+
+            _rigidbody.MovePosition(_rigidbody.position + (_move * Time.deltaTime * _settings.Speed));
         }
         private void rotateModel()
         {

@@ -15,7 +15,7 @@ namespace Buildings
                 return _storagePads.Where(x => x.Type == StorageBuildingType.Input) as IReadOnlyCollection<StoragePad>;
             }
         }
-        public StoragePad OutputStoragePads
+        public StoragePad OutputStoragePad
         {
             get
             {

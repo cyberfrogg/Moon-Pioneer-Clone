@@ -10,8 +10,6 @@ namespace Items.Factory.Installer
 
         public override void InstallBindings()
         {
-            base.InstallBindings();
-
             Container.Bind<ItemsFactory>().FromInstance(_itemsFactory).AsSingle().NonLazy();
         }
     }

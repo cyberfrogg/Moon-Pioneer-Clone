@@ -165,6 +165,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 638064515008694659}
+  - component: {fileID: 7884860104693965574}
+  - component: {fileID: 2136043752}
   - component: {fileID: 638064515008694717}
   - component: {fileID: 6347918604208237701}
   - component: {fileID: 440453839}
@@ -191,6 +193,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &7884860104693965574
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 638064515008694658}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!136 &2136043752
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 638064515008694658}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.25, z: 0}
 --- !u!114 &638064515008694717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +235,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c7130f6b50332c40a0c433651f37de3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawnPoint: {x: 0, y: 0, z: 0}
+  _dieHeight: -20
 --- !u!114 &6347918604208237701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,7 +250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _settings:
-    _speed: 5
+    _speed: 6
     _modelRotationLerp: 13
     _speedSensitivityCurve:
       serializedVersion: 2

@@ -23,7 +23,13 @@ namespace Items.Factory
                 Debug.LogWarning($"There are more than 1 item of type {type}");
             }
 
-            return items.First();
+            return instantiateItem(items.First());
+        }
+        private Item instantiateItem(Item item)
+        {
+            Item instance = Instantiate(item);
+            instance.transform.position = Vector3.zero;
+            return instance;
         }
     }
 }

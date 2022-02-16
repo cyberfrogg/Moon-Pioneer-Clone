@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemType: 0
+  _itemPositionLerp: 10
 --- !u!1 &2793039896267449591
 GameObject:
   m_ObjectHideFlags: 0

@@ -76,6 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemType: 1
+  _itemPositionLerp: 10
 --- !u!1001 &2395832901894058245
 PrefabInstance:
   m_ObjectHideFlags: 0
