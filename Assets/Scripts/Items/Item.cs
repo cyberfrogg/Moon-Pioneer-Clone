@@ -30,15 +30,16 @@ namespace Items
             Debug.Log("TODO: Object need to be properly destroyed on scene and in Lists");
         }
 
-        public void OnSlotAttach()
+        public void OnSlotAttach(ContainerSlot slot)
         {
-
+            transform.SetParent(slot.transform);
         }
-        public void OnSlotDetach()
+        public void OnSlotDetach(ContainerSlot slot)
         {
             _onMovementToStorageDone?.Invoke(false);
             _onMovementToStorageDone = null;
             _currentSlot = null;
+            transform.DetachChildren();
         }
 
         private void Update()

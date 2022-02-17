@@ -7,12 +7,11 @@ namespace Items.Container
     public class ContainerSlotsFactory : MonoBehaviour
     {
         [SerializeField] private ContainerSlot _slotPrefab;
-        //[SerializeField] private float _slotSize = 0.25f;
-        //[SerializeField] private float _slotGap = 0.1f;
+        [SerializeField] private float _slotSize = 0.25f;
 
         private readonly int _maxTotalMultipleSlots = 500;
 
-        public ContainerSlot[] CreateSlots(Transform parent, int slotsCount, int sizeX = 3, int sizeZ = 2)
+        public ContainerSlot[] CreateSlots(Transform parent, int slotsCount, int sizeX = 3, int sizeZ = 3)
         {
             List<ContainerSlot> slots = new List<ContainerSlot>();
 
@@ -23,7 +22,7 @@ namespace Items.Container
                 {
                     for (int z = 0; z < sizeZ; z++)
                     {
-                        if (slots.Count + 1 >= slotsCount)
+                        if (slots.Count >= slotsCount)
                         {
                             return slots.ToArray();
                         }
@@ -34,7 +33,7 @@ namespace Items.Container
 
                         ContainerSlot slot = instantiateSlotPrefab(parent);
 
-                        slot.transform.localPosition = new Vector3(x - (sizeX / 2), y, z - (sizeZ / 2));
+                        slot.transform.localPosition = new Vector3(x - (sizeX / 2), y, z - (sizeZ / 2)) * _slotSize;
                         slots.Add(slot);
                         i++;
                     }

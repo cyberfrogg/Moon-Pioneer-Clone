@@ -138,8 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slotPrefab: {fileID: 7468012118996808759, guid: a109bc86e56f28444959acb26198ffdc, type: 3}
-  _slotSize: 0.25
-  _slotGap: 0.1
+  _slotSize: 0.5
 --- !u!1 &4291865071678629702
 GameObject:
   m_ObjectHideFlags: 0

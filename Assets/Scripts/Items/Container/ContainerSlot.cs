@@ -19,13 +19,14 @@ namespace Items.Container
         public void Attach(Item item)
         {
             _busyItem = item;
+            item.OnSlotAttach(this);
         }
         public Item Detach()
         {
             Item nItem = _busyItem;
             _busyItem = null;
 
-            nItem.OnSlotDetach();
+            nItem.OnSlotDetach(this);
             return nItem;
         }
     }
