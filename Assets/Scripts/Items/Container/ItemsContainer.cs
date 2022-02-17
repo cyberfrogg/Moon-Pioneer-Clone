@@ -7,6 +7,7 @@ using Zenject;
 namespace Items.Container
 {
     // See the bottom of code. There is an interesting bug on [Line ~70]
+    // https://github.com/microsoft/referencesource/issues/164
 
     public class ItemsContainer : MonoBehaviour
     {
