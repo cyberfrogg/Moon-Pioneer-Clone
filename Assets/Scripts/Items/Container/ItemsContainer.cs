@@ -18,9 +18,18 @@ namespace Items.Container
                 return _items.Count >= _capacity;
             }
         }
+        public int Count
+        {
+            get
+            {
+                return _items.Count;
+            }
+        }
         public int Capacity { get => _capacity; }
 
         [SerializeField, Tooltip("Don't change due runtime!")] private int _capacity = 10;
+        [SerializeField] private int _sizeX = 3;
+        [SerializeField] private int _sizeZ = 3;
 
         [Inject] private ContainerSlotsFactory _slotsFactory;
         private List<Item> _items = new List<Item>();
@@ -28,7 +37,7 @@ namespace Items.Container
 
         private void Start()
         {
-            _slots = _slotsFactory.CreateSlots(transform, _capacity);
+            _slots = _slotsFactory.CreateSlots(transform, _capacity, _sizeX, _sizeZ);
         }
 
         public bool AddItem(Item item)

@@ -241,6 +241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _storageType: 0
   _itemsContainer: {fileID: 3460996989766141647}
+  _interactionRadius: 2
 --- !u!1 &7815510253001075592
 GameObject:
   m_ObjectHideFlags: 0

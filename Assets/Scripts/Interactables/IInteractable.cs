@@ -6,7 +6,7 @@ namespace Interactable
     public interface IInteractable
     {
         public float InteractionRadius { get; }
-        public void Interact();
+        public void Interact(Player.Player player);
         public void Register();
         public void Unregister();
     }

@@ -20,9 +20,16 @@ namespace Buildings.Storage
 
         [Inject] private Interactables _interactables;
 
-        public void Interact()
+        public void Interact(Player.Player player)
         {
+            if (ItemsContainer.Count == 0)
+                return;
 
+            Item takenItem = null;
+            if (!ItemsContainer.TakeItem(out takenItem))
+                return;
+
+            player.Backpack.ItemsContainer.AddItem(takenItem);
         }
 
         public void Register()
