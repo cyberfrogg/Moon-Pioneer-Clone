@@ -41,7 +41,9 @@ namespace Buildings
         private bool doProductionWork()
         {
             if (OutputStoragePad.ItemsContainer.CanAddItem() == false)
+            {
                 return false;
+            }
 
             Item newItem = _itemsFactory.CreateItem(_productionItemType);
 

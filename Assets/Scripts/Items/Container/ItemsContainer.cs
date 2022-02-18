@@ -44,6 +44,7 @@ namespace Items.Container
         {
             if (!CanAddItem())
             {
+                Debug.Log("Cant add item");
                 return false;
             }
 
@@ -60,7 +61,15 @@ namespace Items.Container
                 return false;
             }
 
-            item = _items[_items.Count - 1];
+            Item lastItem = _items[_items.Count - 1];
+            item = lastItem;
+
+            IEnumerable<ContainerSlot> busySlotsWithItem = _slots.Where(x => x.BusyItem == lastItem);
+            if (busySlotsWithItem.Count() != 0)
+            {
+                busySlotsWithItem.First().Detach();
+            }
+
             _items.RemoveAt(_items.Count - 1);
 
             return true;

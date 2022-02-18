@@ -39,7 +39,7 @@ namespace Items
             _onMovementToStorageDone?.Invoke(false);
             _onMovementToStorageDone = null;
             _currentSlot = null;
-            transform.DetachChildren();
+            transform.SetParent(null);
         }
 
         private void Update()

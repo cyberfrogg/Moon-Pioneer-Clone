@@ -25,6 +25,9 @@ namespace Buildings.Storage
             if (ItemsContainer.Count == 0)
                 return;
 
+            if (!player.Backpack.ItemsContainer.CanAddItem())
+                return;
+
             Item takenItem = null;
             if (!ItemsContainer.TakeItem(out takenItem))
                 return;
