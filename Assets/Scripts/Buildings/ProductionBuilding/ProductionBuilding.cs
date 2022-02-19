@@ -18,44 +18,26 @@ namespace Buildings
         [SerializeField] private Transform _outputPoint;
 
         [Inject] private ItemsFactory _itemsFactory;
-        private bool _isProductionWorking;
 
         private void Start()
         {
-            Task task = runPruductionWork();
+            ProductionTimer.Ticked += produce;
+            ProductionTimer.Start();
         }
-        private void OnDestroy()
-        {
-            _isProductionWorking = false;
-        }
-        private async Task runPruductionWork()
-        {
-            _isProductionWorking = true;
-
-            while (_isProductionWorking)
-            {
-                doProductionWork();
-                await Task.Delay((int)(PruductionRate * 1000));
-            }
-        }
-        private bool doProductionWork()
+        private void produce()
         {
             if (OutputStoragePad.ItemsContainer.CanAddItem() == false)
-            {
-                return false;
-            }
+                return;
 
             Item newItem = _itemsFactory.CreateItem(_productionItemType);
 
             if (OutputStoragePad.ItemsContainer.AddItem(newItem) == false)
             {
                 newItem.Disappear();
-                return false;
+                return;
             }
 
             newItem.transform.position = _outputPoint.position;
-
-            return true;
         }
     }
 }

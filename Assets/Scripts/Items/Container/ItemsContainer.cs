@@ -27,6 +27,7 @@ namespace Items.Container
         }
         public int Capacity { get => _capacity; }
 
+        [SerializeField] private ItemType _storeItemType;
         [SerializeField, Tooltip("Don't change due runtime!")] private int _capacity = 10;
         [SerializeField] private int _sizeX = 3;
         [SerializeField] private int _sizeZ = 3;
@@ -35,16 +36,16 @@ namespace Items.Container
         private List<Item> _items = new List<Item>();
         private ContainerSlot[] _slots;                                 // Markdown #2
 
-        private void Start()
+        public void Init(ItemType storeItemType)
         {
+            _storeItemType = storeItemType;
             _slots = _slotsFactory.CreateSlots(transform, _capacity, _sizeX, _sizeZ);
         }
 
         public bool AddItem(Item item)
         {
-            if (!CanAddItem())
+            if (!CanAddItem(item))
             {
-                Debug.Log("Cant add item");
                 return false;
             }
 
@@ -74,7 +75,50 @@ namespace Items.Container
 
             return true;
         }
+        public bool TakeItem(out Item item, ItemType type)
+        {
+            if (!CanTakeItem())
+            {
+                item = null;
+                return false;
+            }
 
+            IEnumerable<Item> typedItems = _items.Where(x => x.Type == type);
+            if (typedItems.Count() == 0)
+            {
+                item = null;
+                return false;
+            }
+
+            Item queryTakeItem = typedItems.Last();
+            item = queryTakeItem;
+
+            IEnumerable<ContainerSlot> busySlotsWithItem = _slots.Where(x => x.BusyItem == queryTakeItem);
+            if (busySlotsWithItem.Count() != 0)
+            {
+                busySlotsWithItem.First().Detach();
+            }
+
+            _items.Remove(queryTakeItem);
+
+            return true;
+        }
+
+        public bool CanAddItem(Item item)
+        {
+            if (item == null)
+                return false;
+
+            if (_storeItemType != ItemType.Null)
+            {
+                if (item.Type != _storeItemType)
+                {
+                    return false;
+                }
+            }
+
+            return CanAddItem();
+        }
         public bool CanAddItem()
         {
             return !IsFull;
@@ -86,6 +130,9 @@ namespace Items.Container
 
         public ContainerSlot AttachItemToSlot(Item item)
         {
+            if (_slots == null || _slots.Length == 0)
+                throw new NullReferenceException("Attachment slot is null. Did you initialized this component?");
+
             IEnumerable<ContainerSlot> availableSlots = _slots.Where(x => x.IsBusy == false);       // Markdown #1
             ContainerSlot availableSlot = availableSlots.FirstOrDefault();
             availableSlot.Attach(item);

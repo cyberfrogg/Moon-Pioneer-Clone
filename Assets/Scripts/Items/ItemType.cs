@@ -8,6 +8,7 @@ namespace Items
 {
     public enum ItemType
     {
+        Null,
         Limestone,
         Iron,
         Copper,

@@ -1,5 +1,6 @@
 ﻿using Buildings.Storage;
 using Interactable;
+using Items;
 using Items.Container;
 using System;
 using System.Collections;
@@ -24,6 +25,7 @@ namespace Player
         private void Awake()
         {
             _player = GetComponent<Player>();
+            _itemsContainer.Init(ItemType.Null);
         }
         private void Update()
         {
