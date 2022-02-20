@@ -19,15 +19,22 @@ namespace Items.Container
         public void Attach(Item item)
         {
             _busyItem = item;
+            _busyItem.OnDisappear += onBusyItemDisappeared;
             item.OnSlotAttach(this);
         }
         public Item Detach()
         {
+            _busyItem.OnDisappear -= onBusyItemDisappeared;
             Item nItem = _busyItem;
             _busyItem = null;
 
             nItem.OnSlotDetach(this);
             return nItem;
+        }
+
+        private void onBusyItemDisappeared(Item item)
+        {
+            Detach();
         }
     }
 }

@@ -5,19 +5,20 @@ using UnityEngine;
 
 namespace Buildings
 {
-    [Serializable]
     public class BuildingProductionTimer
     {
         public delegate void BuildingProductionTimerHandler();
         public event BuildingProductionTimerHandler Ticked;
-
-        [SerializeField] private float _tickTime;
+        public float TickTime;
 
         private CancellationTokenSource tickingTaskTokenSource;
         private Task _tickingTask;
 
         public void Start()
         {
+            if (TickTime <= 0)
+                throw new ArgumentException($"Tick time cant be less or equal zero");
+
             tickingTaskTokenSource = new CancellationTokenSource();
             CancellationToken ct = tickingTaskTokenSource.Token;
 
@@ -49,7 +50,7 @@ namespace Buildings
                 {
                     Debug.LogError($"{ex.Message} \n {ex.StackTrace}");
                 }
-                await Task.Delay((int)(_tickTime * 1000));
+                await Task.Delay((int)(TickTime * 1000));
             }
         }
     }

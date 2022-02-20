@@ -1,35 +1,82 @@
-﻿using Items;
+﻿using Buildings.Storage;
+using Items;
 using Items.Factory;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
-namespace Buildings
+namespace Buildings.ProductionBuilding
 {
     public class ProductionBuilding : BuildingBase
     {
-        public float PruductionRate { get => _productionRate; }
-        public ItemType ProductionItemType { get => _productionItemType; }
+        public Recipe Recipe { get => _recipe; }
 
-        [SerializeField] private float _productionRate;
-        [SerializeField] private ItemType _productionItemType;
+        [SerializeField] private Recipe _recipe;
         [Space]
+        [SerializeField] private Transform _inputPoint;
         [SerializeField] private Transform _outputPoint;
 
         [Inject] private ItemsFactory _itemsFactory;
 
+        public bool CanCraft()
+        {
+            if (_recipe.InputItems.Count == 0)
+                return true;
+
+            if (_recipe.InputItems.Count != InputStoragePads.Count)
+            {
+                Debug.Log($"Count of Recipe Inputs and Input StoragePads doesn't match!");
+                return false;
+            }
+
+            List<StoragePad> validPads = new List<StoragePad>();
+
+            foreach (ItemType item in _recipe.InputItems)
+            {
+                foreach (StoragePad pad in InputStoragePads)
+                {
+                    if (pad.ItemType == item && pad.ItemsContainer.Count == 0)
+                        continue;
+
+                    validPads.Add(pad);
+                }
+            }
+
+            if (validPads.Count < _recipe.InputItems.Count)
+                return false;
+
+            return true;
+        }
+
         private void Start()
         {
+            ProductionTimer.TickTime = _recipe.ProductionTime;
             ProductionTimer.Ticked += produce;
             ProductionTimer.Start();
         }
         private void produce()
         {
+            if (_recipe == null || !CanCraft())
+                return;
+
             if (OutputStoragePad.ItemsContainer.CanAddItem() == false)
                 return;
 
-            Item newItem = _itemsFactory.CreateItem(_productionItemType);
+            Item newItem = _itemsFactory.CreateItem(_recipe.OutputItem);
+
+            for (int i = 0; i < _recipe.InputItems.Count; i++)
+            {
+                Item inputItem = null;
+                StoragePad inputPad = InputStoragePads.ElementAt(i);
+
+                if (!inputPad.ItemsContainer.TakeItem(out inputItem, _recipe.InputItems.ElementAt(i)))
+                    return;
+
+                inputItem.Disappear();
+            }
 
             if (OutputStoragePad.ItemsContainer.AddItem(newItem) == false)
             {

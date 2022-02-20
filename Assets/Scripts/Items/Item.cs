@@ -10,6 +10,7 @@ namespace Items
     public class Item : MonoBehaviour
     {
         public ItemType Type { get => _itemType; }
+        public Action<Item> OnDisappear;
 
         [SerializeField] private ItemType _itemType;
         [SerializeField] private float _itemPositionLerp = 10f;
@@ -27,7 +28,8 @@ namespace Items
         }
         public void Disappear()
         {
-            Debug.Log("TODO: Object need to be properly destroyed on scene and in Lists");
+            OnDisappear?.Invoke(this);
+            Destroy(gameObject);
         }
 
         public void OnSlotAttach(ContainerSlot slot)

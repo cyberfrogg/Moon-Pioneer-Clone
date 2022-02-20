@@ -12,7 +12,7 @@ namespace Buildings
         {
             get
             {
-                return _storagePads.Where(x => x.Type == StorageBuildingType.Input) as IReadOnlyCollection<StoragePad>;
+                return _storagePads.Where(x => x.Type == StorageBuildingType.Input).ToList().AsReadOnly();
             }
         }
         public StoragePad OutputStoragePad
@@ -25,7 +25,7 @@ namespace Buildings
         protected BuildingProductionTimer ProductionTimer { get => _productionTimer; }
 
         [SerializeField] private StoragePad[] _storagePads;
-        [SerializeField] private BuildingProductionTimer _productionTimer;
+        private BuildingProductionTimer _productionTimer = new BuildingProductionTimer();
 
         private void OnDestroy()
         {
