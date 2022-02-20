@@ -32,8 +32,9 @@ namespace Items.Container
                         }
 
                         ContainerSlot slot = instantiateSlotPrefab(parent);
-
                         slot.transform.localPosition = new Vector3(x - (sizeX / 2), y, z - (sizeZ / 2)) * _slotSize;
+                        slot.transform.localRotation = Quaternion.identity;
+
                         slots.Add(slot);
                         i++;
                     }

@@ -50,7 +50,7 @@ namespace Items.Container
             }
 
             _items.Add(item);
-            item.GoToSlot(this, null);
+            item.GoToSlot(this);
 
             return true;
         }

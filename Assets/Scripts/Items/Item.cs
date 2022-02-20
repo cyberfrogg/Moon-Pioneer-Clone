@@ -14,17 +14,14 @@ namespace Items
 
         [SerializeField] private ItemType _itemType;
         [SerializeField] private float _itemPositionLerp = 10f;
+        [SerializeField] private float _itemRotationLerp = 10f;
 
+        private readonly float _moveEndThreshold = 0.01f;
         private ContainerSlot _currentSlot;
-        private Action<bool> _onMovementToStorageDone;
 
-        public void GoToSlot(ItemsContainer container, Action<bool> onMovementDone)
+        public void GoToSlot(ItemsContainer container)
         {
-            _onMovementToStorageDone?.Invoke(false);
-            _onMovementToStorageDone = null;
-
             _currentSlot = container.AttachItemToSlot(this);
-            _onMovementToStorageDone += onMovementDone;
         }
         public void Disappear()
         {
@@ -38,8 +35,6 @@ namespace Items
         }
         public void OnSlotDetach(ContainerSlot slot)
         {
-            _onMovementToStorageDone?.Invoke(false);
-            _onMovementToStorageDone = null;
             _currentSlot = null;
             transform.SetParent(null);
         }
@@ -51,18 +46,29 @@ namespace Items
                 return;
             }
 
+            moveToSlot();
+
+            float distanceToTarget = Vector3.Distance(transform.position, _currentSlot.transform.position);
+            if (distanceToTarget <= _moveEndThreshold)
+            {
+                transform.position = _currentSlot.transform.position;
+                transform.localRotation = Quaternion.identity;
+                _currentSlot = null;
+            }
+        }
+        private void moveToSlot()
+        {
             transform.position = Vector3.Lerp(
                 transform.position,
                 _currentSlot.transform.position,
                 _itemPositionLerp * Time.deltaTime
                 );
 
-            float distanceToTarget = Vector3.Distance(transform.position, _currentSlot.transform.position);
-            if (distanceToTarget <= 0.1f)
-            {
-                _currentSlot = null;
-                _onMovementToStorageDone?.Invoke(true);
-            }
+            transform.rotation = Quaternion.Lerp(
+                transform.rotation,
+                _currentSlot.transform.rotation,
+                _itemRotationLerp * Time.deltaTime
+                );
         }
     }
 }
