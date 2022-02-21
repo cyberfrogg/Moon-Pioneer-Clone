@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 5000500009956815232}
   - component: {fileID: 6272060109585671419}
   - component: {fileID: 7134037918595844603}
+  - component: {fileID: 5526665996191279997}
   m_Layer: 0
   m_Name: indicator_light
   m_TagString: Untagged
@@ -111,6 +112,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5526665996191279997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566611021705697714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 977863a23b03e6448bc5aa282b48ea69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bulbMeshRenderer: {fileID: 7134037918595844603}
 --- !u!1 &1898554848311611983
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,6 +377,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 322f200dcc46d39438c6a27320701346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attachments:
+  - {fileID: 5526665996191279997}
   _storagePads: []
   _recipe: {fileID: 0}
   _inputPoint: {fileID: 7513859840062985181}

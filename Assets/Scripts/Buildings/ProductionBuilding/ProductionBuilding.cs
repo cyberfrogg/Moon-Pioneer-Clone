@@ -1,4 +1,5 @@
-﻿using Buildings.Storage;
+﻿using Buildings.ProductionBuilding.States;
+using Buildings.Storage;
 using Items;
 using Items.Factory;
 using System;
@@ -13,6 +14,8 @@ namespace Buildings.ProductionBuilding
     public class ProductionBuilding : BuildingBase
     {
         public Recipe Recipe { get => _recipe; }
+        public WorkingState WorkingState { get => _workingState; }
+        public SuspendedState SuspendedState { get => _suspendedState; }
 
         [SerializeField] private Recipe _recipe;
         [Space]
@@ -20,6 +23,10 @@ namespace Buildings.ProductionBuilding
         [SerializeField] private Transform _outputPoint;
 
         [Inject] private ItemsFactory _itemsFactory;
+
+        private ProductionStateBase _currentState;
+        private WorkingState _workingState = new WorkingState();
+        private SuspendedState _suspendedState = new SuspendedState();
 
         public bool CanCraft()
         {
@@ -50,12 +57,23 @@ namespace Buildings.ProductionBuilding
 
             return true;
         }
+        public void SwitchState(ProductionStateBase state)
+        {
+            _currentState = state;
+            _currentState.Enter(this);
+        }
 
         private void Start()
         {
             ProductionTimer.TickTime = _recipe.ProductionTime;
             ProductionTimer.Ticked += produce;
             ProductionTimer.Start();
+
+            SwitchState(_workingState);
+        }
+        private void Update()
+        {
+            _currentState.Update();
         }
         private void produce()
         {
