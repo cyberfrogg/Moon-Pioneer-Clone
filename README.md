@@ -1,6 +1,11 @@
 # Moon-Pioner-Clone
 In this project I experimented with graphics. I tried to make cool toon effect and make this game cute. Also I improoved my skill in C# programming and I want to make some showcase-game to show my skills.
 
+
+## Actual gameplay
+
+![Moon pioner gameplay](https://res.cloudinary.com/duacljwr0/image/upload/v1645641669/moon-pioner-gameplay_bw5kkj.gif)
+ *Just basics*
  
 ## Dependencies
 
