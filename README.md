@@ -4,7 +4,7 @@ In this project I experimented with graphics. I tried to make cool toon effect a
 
 ## Actual gameplay
 
-<img src="https://res.cloudinary.com/duacljwr0/image/upload/v1645641669/moon-pioner-gameplay_bw5kkj.gif" height=400px />
+<img src="https://res.cloudinary.com/duacljwr0/image/upload/v1645641866/moon-pioner-gameplay-small_hdji8k.gif" height=400px />
  *Just basics*
  
 ## Dependencies
